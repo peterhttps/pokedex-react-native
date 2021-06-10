@@ -10,8 +10,11 @@ export const Container = styled.View<{color: string}>`
     justify-content: space-between;
     padding: 10px 30px;
     align-items: center;
-    margin-bottom: 20px;
     z-index: 1;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+
 `;
 
 export const CardLeftArea = styled.View`
@@ -41,7 +44,7 @@ export const PokemonTypes = styled.View`
     margin-top: 5px;
 `;
 
-export const Type = styled.Text<{color: string, background: string}>`
+export const Type = styled.Text<{color: string, background?: string}>`
     
     ${({
         color,

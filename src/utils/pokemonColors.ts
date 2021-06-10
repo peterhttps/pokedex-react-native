@@ -1,4 +1,6 @@
-const colors = {
+import { IColors } from '../interfaces/IColors';
+
+const colors: IColors = {
     normal: '#A8A77A',
     fire: '#EE8130',
     water:  '#6390F0',

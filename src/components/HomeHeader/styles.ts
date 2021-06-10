@@ -7,6 +7,8 @@ export const Wrapper = styled.ScrollView`
 `;
 
 export const Container = styled.View`
+    padding: 40px;
+    background: #FFFFFF;
 
 `;
 
@@ -46,10 +48,7 @@ export const InputComponent = styled.TextInput`
 `;
 
 export const Body = styled.View`
-    
-`;
-
-export const PokemonList = styled.FlatList`
-    background: #FFFFFF;
+    margin-top: 40px;
+    padding-bottom: 40px;
 `;
 

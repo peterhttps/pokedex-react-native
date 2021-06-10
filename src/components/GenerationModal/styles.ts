@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export const Container = styled.View`
     padding: 30px;
-
 `;
 
 export const Title = styled.Text`
@@ -25,4 +25,8 @@ export const CardContainer = styled.View`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+`;
+
+export const ButtonGeneration = styled.TouchableOpacity`
+    width: 48%;
 `;

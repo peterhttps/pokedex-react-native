@@ -13,6 +13,8 @@ import {
 } from './styles';
 
 import pokemonColors from '../../utils/pokemonColors';
+import { IPokemon } from '../../interfaces/IPokemon';
+import { IColors } from '../../interfaces/IColors';
 
 interface Iprops {
     name: string;
@@ -20,8 +22,17 @@ interface Iprops {
 
 const PokemonCard = ({ name }: Iprops): JSX.Element => {
 
-    const [pokemon, setPokemon] = useState({
+    const [pokemon, setPokemon] = useState<IPokemon>({
         id: 1,
+        types: [
+            {
+                slot: '1',
+                type: {
+                    name: 'flying',
+                    url: 'https://pokeapi.co/api/v2/type/3/'
+                }
+            }
+        ]
     });
 
     useEffect(() => {
@@ -36,7 +47,7 @@ const PokemonCard = ({ name }: Iprops): JSX.Element => {
     }   
 
     return (
-        <Container color={pokemon.types ? pokemonColors[pokemon.types[0].type.name] : '#DDDDDD'}>
+        <Container color={pokemon.types ? pokemonColors[pokemon.types[0].type.name as keyof IColors] : '#DDDDDD'}>
             <CardLeftArea>
                 <PokemonID># {pokemon.id}</PokemonID>
                 <PokemonTitle>
@@ -45,7 +56,7 @@ const PokemonCard = ({ name }: Iprops): JSX.Element => {
                 <PokemonTypes>
                     {pokemon.types && pokemon.types.map(type => {
                         return (
-                            <Type color={pokemonColors[type.type.name]} key={type.type.name}>
+                            <Type color={pokemonColors[type.type.name as keyof IColors]} key={type.type.name}>
                                 {type.type.name}
                             </Type>
                         );
