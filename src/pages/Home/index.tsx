@@ -14,18 +14,17 @@ import GenerationModal from '../../components/GenerationModal/index';
 const Home: React.FC = () => {
 
     const [pokemons, setPokemons] = useState([]);
+    const [actualGeneration, setActualGeneration] = useState(1);
     const modalizeRef = useRef<Modalize>(null);
-
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [actualGeneration]);
 
     async function getData() {
-        const { data } = await getPokemonsByGeneration(1);
+        const { data } = await getPokemonsByGeneration(actualGeneration);
         setPokemons(data.pokemon_species);
     }
-
 
     const renderItem = ({ item }: any) => <PokemonCard name={item.name} key={item.name}/>;
 
@@ -44,7 +43,7 @@ const Home: React.FC = () => {
             </Body>
             
             <Modalize ref={modalizeRef}>
-                <GenerationModal />
+                <GenerationModal changeGen={setActualGeneration} modalRef={modalizeRef} actualGen={actualGeneration} />
             </Modalize>
         </>
     );

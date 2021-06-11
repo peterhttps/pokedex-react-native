@@ -14,7 +14,6 @@ export const Container = styled.View<{color: string}>`
     width: 80%;
     margin: auto;
     margin-bottom: 20px;
-
 `;
 
 export const CardLeftArea = styled.View`
@@ -76,4 +75,10 @@ export const PokeballImage = styled.Image`
     margin-right: 0;
     right: -10px;
     opacity: 0.08;
+`;
+
+export const SkeletonWrapper = styled.View`
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: 20px;
 `;

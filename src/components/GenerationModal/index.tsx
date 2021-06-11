@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React, { useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import { Modalize } from 'react-native-modalize';
 import GenerationCard from '../GenerationCard';
 
 import { 
@@ -35,12 +36,20 @@ const snivy = require('../../assets/images/generationV/snivy.png');
 const tepig = require('../../assets/images/generationV/tepig.png');
 const oshawott = require('../../assets/images/generationV/oshawott.png');
 
-const GenerationModal: React.FC = () => {
+interface IProps {
+    changeGen: Dispatch<SetStateAction<number>>
+    modalRef: RefObject<Modalize>;
+    actualGen: number;
+}
 
-    const [selectedGeneration, setSelectedGeneration] = useState(1);
+const GenerationModal = ({ changeGen, modalRef, actualGen }: IProps): JSX.Element => {
+
+    const [selectedGeneration, setSelectedGeneration] = useState(actualGen);
 
     const changeGeneration = (generationNumber: number) => {
         setSelectedGeneration(generationNumber);
+        changeGen(generationNumber);
+        modalRef.current?.close();
     };
 
     return (
@@ -49,7 +58,7 @@ const GenerationModal: React.FC = () => {
             <Description>Use search for generations to explore your Pokémon!</Description>
 
             <CardContainer>
-                <ButtonGeneration onPress={() => changeGeneration(1)}>
+                <ButtonGeneration activeOpacity={1} activeOpacity={1} onPress={() => changeGeneration(1)}>
                     <GenerationCard 
                         title={'Generation I'}
                         pathOne={bulbasaur}
@@ -59,7 +68,7 @@ const GenerationModal: React.FC = () => {
                     />
                 </ButtonGeneration>
                 
-                <ButtonGeneration onPress={() => changeGeneration(2)}>
+                <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(2)}>
                     <GenerationCard 
                         title={'Generation II'}
                         pathOne={chikorita}
@@ -69,7 +78,7 @@ const GenerationModal: React.FC = () => {
                     />
                 </ButtonGeneration>
 
-                <ButtonGeneration onPress={() => changeGeneration(3)}>
+                <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(3)}>
                     <GenerationCard 
                         title={'Generation III'}
                         pathOne={mudkip}
@@ -79,7 +88,7 @@ const GenerationModal: React.FC = () => {
                     />
                 </ButtonGeneration>
 
-                <ButtonGeneration onPress={() => changeGeneration(4)}>
+                <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(4)}>
                     <GenerationCard 
                         title={'Generation IV'}
                         pathOne={chimchar}
@@ -90,7 +99,7 @@ const GenerationModal: React.FC = () => {
                 </ButtonGeneration>
 
 
-                <ButtonGeneration onPress={() => changeGeneration(5)}>
+                <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(5)}>
                     <GenerationCard 
                         title={'Generation V'}
                         pathOne={snivy}

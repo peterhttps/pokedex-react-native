@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getIndividualPokemon } from '../../services/pokemonService';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 import { 
     Container,
@@ -9,12 +10,14 @@ import {
     Type,
     PokemonImage,
     PokeballImage,
-    PokemonID
+    PokemonID,
+    SkeletonWrapper
 } from './styles';
 
 import pokemonColors from '../../utils/pokemonColors';
 import { IPokemon } from '../../interfaces/IPokemon';
 import { IColors } from '../../interfaces/IColors';
+import { View } from 'react-native';
 
 interface Iprops {
     name: string;
@@ -35,6 +38,8 @@ const PokemonCard = ({ name }: Iprops): JSX.Element => {
         ]
     });
 
+    const [loaded, setLoaded] = useState(false);
+
     useEffect(() => {
         //console.log(url);
         getPokemon();
@@ -44,32 +49,45 @@ const PokemonCard = ({ name }: Iprops): JSX.Element => {
         const { data } = await getIndividualPokemon(name);
 
         setPokemon(data);
+        setLoaded(true);
     }   
 
-    return (
-        <Container color={pokemon.types ? pokemonColors[pokemon.types[0].type.name as keyof IColors] : '#DDDDDD'}>
-            <CardLeftArea>
-                <PokemonID># {pokemon.id}</PokemonID>
-                <PokemonTitle>
-                    {name}
-                </PokemonTitle>
-                <PokemonTypes>
-                    {pokemon.types && pokemon.types.map(type => {
-                        return (
-                            <Type color={pokemonColors[type.type.name as keyof IColors]} key={type.type.name}>
-                                {type.type.name}
-                            </Type>
-                        );
-                    })}
-                </PokemonTypes>
-            </CardLeftArea>
-           
-            <PokemonImage source={{
-                uri: `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
-            }} />
+    if (!loaded) {
+        return (
+            <SkeletonWrapper>
+                <SkeletonPlaceholder>
+                    <View style={{ width: '100%', height: 120, margin: 'auto', borderRadius: 10}} />
+                </SkeletonPlaceholder>
+            </SkeletonWrapper>
+        );
+    }
 
-            <PokeballImage source={require('../../assets/images/whitePokeball.png')}/>
-        </Container>
+    return (
+        <>
+            <Container color={pokemon.types ? pokemonColors[pokemon.types[0].type.name as keyof IColors] : '#DDDDDD'}>
+                <CardLeftArea>
+                    <PokemonID># {pokemon.id}</PokemonID>
+                    <PokemonTitle>
+                        {name}
+                    </PokemonTitle>
+                    <PokemonTypes>
+                        {pokemon.types && pokemon.types.map(type => {
+                            return (
+                                <Type color={pokemonColors[type.type.name as keyof IColors]} key={type.type.name}>
+                                    {type.type.name}
+                                </Type>
+                            );
+                        })}
+                    </PokemonTypes>
+                </CardLeftArea>
+           
+                <PokemonImage source={{
+                    uri: `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`
+                }} />
+
+                <PokeballImage source={require('../../assets/images/whitePokeball.png')}/>
+            </Container>
+        </>
     );
 };
 
