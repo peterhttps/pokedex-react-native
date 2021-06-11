@@ -45,6 +45,9 @@ export const InputWrapper = styled.View`
 
 export const InputComponent = styled.TextInput`
     margin-left: 10px;
+    margin-right: 10px;
+    max-width: 82%;
+    font-size: 13px;
 `;
 
 export const Body = styled.View`

@@ -8,8 +8,12 @@ import HomeScreen from './pages/Home';
 
 const Routes = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+        <Stack.Navigator screenOptions={{cardStyle: { backgroundColor: '#fff' }}}>
+            <Stack.Screen 
+                name="Home" 
+                component={HomeScreen} 
+                options={{ headerShown: false }}    
+            />
         </Stack.Navigator>
     );
 };

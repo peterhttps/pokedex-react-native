@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { getIndividualPokemon } from '../../services/pokemonService';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
@@ -38,18 +38,25 @@ const PokemonCard = ({ name }: Iprops): JSX.Element => {
         ]
     });
 
+    const isMounted = useRef(true);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
+
         //console.log(url);
         getPokemon();
+
+        return () => {
+            isMounted.current = false;
+        }
     }, []);
 
     async function getPokemon() {
-        const { data } = await getIndividualPokemon(name);
-
-        setPokemon(data);
-        setLoaded(true);
+        const { data, status } = await getIndividualPokemon(name);
+        if (isMounted.current && status === 200) {
+            setPokemon(data);
+            setLoaded(true);
+        }        
     }   
 
     if (!loaded) {

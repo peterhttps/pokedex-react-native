@@ -36,6 +36,11 @@ const snivy = require('../../assets/images/generationV/snivy.png');
 const tepig = require('../../assets/images/generationV/tepig.png');
 const oshawott = require('../../assets/images/generationV/oshawott.png');
 
+// Geration VI
+const chespin = require('../../assets/images/generationVI/chespin.png');
+const fennekin = require('../../assets/images/generationVI/fennekin.png');
+const froakie = require('../../assets/images/generationVI/froakie.png');
+
 interface IProps {
     changeGen: Dispatch<SetStateAction<number>>
     modalRef: RefObject<Modalize>;
@@ -58,7 +63,7 @@ const GenerationModal = ({ changeGen, modalRef, actualGen }: IProps): JSX.Elemen
             <Description>Use search for generations to explore your Pokémon!</Description>
 
             <CardContainer>
-                <ButtonGeneration activeOpacity={1} activeOpacity={1} onPress={() => changeGeneration(1)}>
+                <ButtonGeneration activeOpacity={1}  onPress={() => changeGeneration(1)}>
                     <GenerationCard 
                         title={'Generation I'}
                         pathOne={bulbasaur}
@@ -98,7 +103,6 @@ const GenerationModal = ({ changeGen, modalRef, actualGen }: IProps): JSX.Elemen
                     />
                 </ButtonGeneration>
 
-
                 <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(5)}>
                     <GenerationCard 
                         title={'Generation V'}
@@ -106,6 +110,16 @@ const GenerationModal = ({ changeGen, modalRef, actualGen }: IProps): JSX.Elemen
                         pathTwo={tepig}
                         pathThree={oshawott}
                         selected={selectedGeneration === 5}
+                    />
+                </ButtonGeneration>
+
+                <ButtonGeneration activeOpacity={1} onPress={() => changeGeneration(6)}>
+                    <GenerationCard 
+                        title={'Generation VI'}
+                        pathOne={chespin}
+                        pathTwo={fennekin}
+                        pathThree={froakie}
+                        selected={selectedGeneration === 6}
                     />
                 </ButtonGeneration>
             </CardContainer>
