@@ -7,6 +7,7 @@ interface ITypes {
 }
 
 export interface IPokemon {
+    name: string;
     id: string | number;
     types: ITypes[];
 }

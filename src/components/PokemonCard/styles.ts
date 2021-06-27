@@ -46,18 +46,18 @@ export const PokemonTypes = styled.View`
 export const Type = styled.Text<{color: string, background?: string}>`
     
     ${({
-        color,
-        background = shade(0.1, color),
-    }) => {
-        const style = `
+    color,
+    background = shade(0.1, color),
+  }) => {
+    const style = `
             background: ${background};
             padding: 5px 10px;
             font-weight: bold;
             color: white;
             margin-right: 10px;
       `;
-        return style;
-    }}
+    return style;
+  }}
 `;
 
 export const PokemonImage = styled.Image`

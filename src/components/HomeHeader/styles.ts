@@ -9,16 +9,7 @@ export const Wrapper = styled.ScrollView`
 export const Container = styled.View`
     padding: 40px;
     background: #FFFFFF;
-
-`;
-
-export const GenerationButton = styled.TouchableOpacity`
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-end;
+    margin-top: 20px;
 `;
 
 export const Title = styled.Text`
@@ -47,7 +38,8 @@ export const InputComponent = styled.TextInput`
     margin-left: 10px;
     margin-right: 10px;
     max-width: 82%;
-    font-size: 13px;
+    flex: 1;
+    font-size: 12px;
 `;
 
 export const Body = styled.View`

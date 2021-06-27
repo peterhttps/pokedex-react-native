@@ -46,7 +46,7 @@ export const InputComponent = styled.TextInput`
 `;
 
 export const Body = styled.View`
-    
+    flex: 1;
 `;
 
 export const PokemonList = styled.FlatList`

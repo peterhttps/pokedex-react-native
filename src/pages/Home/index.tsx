@@ -1,65 +1,66 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import { 
-    Body,
-    PokemonList
+  Body,
+  PokemonList
 } from './styles';
 
 import PokemonCard from '../../components/PokemonCard';
-import { getIndividualPokemon, getPokemonsByGeneration } from '../../services/pokemonService';
+import { getAllPokemons, getIndividualPokemon } from '../../services/pokemonService';
 import HomeHeader from '../../components/HomeHeader';
-import { Modalize } from 'react-native-modalize';
-import GenerationModal from '../../components/GenerationModal/index';
 
 const Home: React.FC = () => {
 
-    const [pokemons, setPokemons] = useState<any[]>([]);
-    const [onlyPokemon, setOnlyPokemon] = useState('');
-    const [actualGeneration, setActualGeneration] = useState(1);
-    const modalizeRef = useRef<Modalize>(null);
+  const [pokemons, setPokemons] = useState<any[]>([]);
+  const [onlyPokemon, setOnlyPokemon] = useState('');
 
-    useEffect(() => {
-        getGeneration();
-    }, [actualGeneration]);
+  useEffect(() => {
+    getData();
+  }, []);
 
-    async function getGeneration() {
-        const { data } = await getPokemonsByGeneration(actualGeneration);
-        setPokemons(data.pokemon_species);
+  async function getData() {
+    const { data } = await getAllPokemons();
+    setPokemons(data.results);
+  }
+
+  useEffect(() => {
+    if (onlyPokemon.length === 0) getData();
+    else getPokemon();
+  }, [onlyPokemon]);
+
+  async function getPokemon() {
+    const { data, status } = await getIndividualPokemon(onlyPokemon.toLocaleLowerCase());
+    if (status === 200) {
+      const dataArray = [];
+      dataArray.push(data);
+      setPokemons(dataArray);
     }
-
-    useEffect(() => {
-        if (onlyPokemon.length === 0) getGeneration();
-        else getPokemon();
-    }, [onlyPokemon]);
-
-    async function getPokemon() {
-        const { data } = await getIndividualPokemon(onlyPokemon.toLocaleLowerCase());
-        const dataArray = [];
-        dataArray.push(data);
-        setPokemons(dataArray);
-    }
+  }
     
-    const renderItem = ({ item }: any) => <PokemonCard name={item.name} key={item.name}/>;
+  const renderItem = useCallback(({ item }: any) => <PokemonCard name={item.name} key={item.name}/>, []);
+  const keyExtrtactor = useCallback((item: any) => item.name || 'none', []);
 
-    return (
-        <>
-            <Body>
-                {pokemons.length > 0 && 
-
+  return (
+    <>
+      <StatusBar style="dark" backgroundColor="#FFFFFF" />
+      <Body>
+        {pokemons.length > 0 && 
                     <PokemonList
-                        data={pokemons}
-                        renderItem={renderItem}
-                        keyExtractor={(item: any) => item.name}
-                        ListHeaderComponent={<HomeHeader modalRef={modalizeRef} searchPokemon={setOnlyPokemon} />}
+                      data={pokemons}
+                      renderItem={renderItem}
+                      keyExtractor={keyExtrtactor}
+                      ListHeaderComponent={<HomeHeader searchPokemon={setOnlyPokemon} />}
+                      maxToRenderPerBatch={6}
+                      removeClippedSubviews={true}
+                      initialNumToRender={4}
+                      windowSize={5}
+                      updateCellsBatchingPeriod={10}
                     />
-                }
-            </Body>
-            
-            <Modalize ref={modalizeRef}>
-                <GenerationModal changeGen={setActualGeneration} modalRef={modalizeRef} actualGen={actualGeneration} />
-            </Modalize>
-        </>
-    );
+        }
+      </Body>
+    </>
+  );
 };
 
 export default Home;
